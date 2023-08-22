@@ -8,12 +8,12 @@ const ChannelCard = ({channel ,marginTop}) => {
 		return null; 	// Handle the case where channel is null or undefined
 	  }
 	const {id: {channelId} , snippet} = channel;
-	console.log(snippet)
 
   return (
 
 	<Card sx={{ width:{md:'320px',xs:'70vw'} ,background:'none', display:'flex' ,alignItems:'center' ,justifyContent:'center', margin:'auto' ,boxShadow:'none', marginTop:{marginTop}}} >
-		<Link to={`/channel/${channelId}`}>
+
+		<Link to={channelId?`/channel/${channelId}`:demoChannelUrl}>
 			<CardContent>
 				<CardMedia image={ snippet?.thumbnails?.high?.url || demoThumbnailUrl} alt={snippet?.title} sx={{mb:'20px' ,width:{md:'200px',xs:'50vw'}, height:{md:'200px',xs:'50vw'},borderRadius:'50%'}}>
 				</CardMedia>
