@@ -7,7 +7,7 @@ import { demoChannelUrl } from '../utils/constant'
 import { fetchFromApi } from '../utils/fetchFromApi'
 import ReactPlayer from 'react-player'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-// import Comments from './Comments'
+import Comments from './Comments'
 
 const VideoDetail = () => {
 	const {id} = useParams();
@@ -23,8 +23,7 @@ const VideoDetail = () => {
 
 		fetchFromApi(`commentThreads?part=snippet&videoId=${id}`).then((data)=>{
 			if(data){
-				setcomments(data?.items)
-				console.log(data?.items)
+				setcomments(data?.items )
 			}
 		})
 	} ,[id])
@@ -33,26 +32,35 @@ const VideoDetail = () => {
 	const { snippet, statistics } = videoInfo ;
 
   return (
-      <Box minHeight='95vh'>
-		<Stack direction={{ xs:'column' ,md:'row'}} ml='100px'>
+      <Box minHeight='80vh' mt='1vw' >
+		<Stack direction="column" sx={{justifyContent:'center'}} px={4}  >
 			{/* player  */}
-          <Box sx={{ flexGrow:'1' ,width:'100%' ,position:'sticky' ,top:'90px'}} >
+          {/* <Box sx={{width:{md:'90vw',xs:'70vw'} ,textAlign:'center'}}    > */}
 				<ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className='react-player' controls/>
-				<Typography variant='h6' color='white' mt={3}>
+
+				<Typography variant='h6' color='white' mt={2} pl={4}>
 					{snippet?.title}
 				</Typography>
 
-				<Stack direction='row' justifyContent="space-between">
+				<Stack direction='row' justifyContent="space-between"  pl={4} sx={{ ...(theme) => ({
+						[theme.breakpoints.up('sm')]: {
+							variant:'captions',htmlFontSize:'1vw'
+						},
+						[theme.breakpoints.up('md')]: {
+							variant:'subtitles1'
+						},
+					}),}}>
+
 					{/* channel Name & circle */}
 					<Link to={snippet?.channelId?`channel/${snippet?.channelId}`:demoChannelUrl}>
-						<Typography variant='subtitle1' color='white' mt={3}>
+						<Typography  color='white' mt={3}>
                           {snippet?.channelTitle}
 						  <CheckCircle sx={{ fontSize:'12px' ,ml:'8px'}} />
 						</Typography>
 					</Link>
 
 					{/* Like and views */}
-					<Stack direction='row' variant={'body1'} opacity='0.8' gap='40px' mr='25px'>
+					<Stack direction='row'  opacity='0.8' gap='40px' mr='25px'>
 						<Typography color='white' mt={3}textAlign='center' flexDirection='row' sx={{display:'flex',alignItems:'center'}}>
 							{parseInt(statistics?.viewCount).toLocaleString()} views
 						</Typography>
@@ -62,24 +70,24 @@ const VideoDetail = () => {
 						</Typography>
 					</Stack>
 				</Stack>
-		  </Box>
+		  {/* </Box> */}
 		</Stack>
 
-		<Box color='white' m='70px' style={{ backgroundColor:'#3f3f3f',padding:'2vw' ,paddingBottom:'20px', borderRadius:'20px'}}>
-			<Typography variant="h5" my='5px' mb='10px'>
+		<Box color='white' m={4} sx={{ backgroundColor:'#3f3f3f',p:'1.5vw' ,pb:'20px', borderRadius:'20px'}}>
+
+			<Typography variant="h5" pb='5px'>
 				Description 
 			</Typography>
 
-			<Box maxHeight='30vh' style={{overflow: 'auto'}} >
+			<Box maxHeight='40vw' style={{overflow: 'auto'}} >
 				<Typography variant="body1" >
 				{snippet?.description}
 				</Typography>
 			</Box>
 		</Box>
 		 {/* comments video  */}
-		{/* <Box m='70px' px={2} py={{md:'1' ,xs:'5'}} justifyContent='center' alignItems='center'>
-			{comments && <Comments comments={comments} />}
-		</Box> */}
+
+		{comments && <Comments comments={comments} totalComment={statistics?.commentCount} />}
 
 	  </Box>
   )
