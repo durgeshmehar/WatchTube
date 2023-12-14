@@ -52,7 +52,8 @@ const VideoDetail = () => {
 					}),}}>
 
 					{/* channel Name & circle */}
-					<Link to={snippet?.channelId?`channel/${snippet?.channelId}`:demoChannelUrl}>
+
+					<Link to={snippet?.channelId?`/channel/${snippet?.channelId}`:demoChannelUrl}>
 						<Typography  color='white' mt={3}>
                           {snippet?.channelTitle}
 						  <CheckCircle sx={{ fontSize:'12px' ,ml:'8px'}} />
