@@ -9,7 +9,7 @@ const Navbar = () => {
 		<Link to='/' sx={{ display:'flex' ,alignItems :'center'}} >
 			<img src={youtubeIcon} alt="logo" height={45} /> 
 		</Link>
-		<h3 style="color: white;">WatchTube</h3>
+		
 		<SearchBar />
 	</Stack>
 
